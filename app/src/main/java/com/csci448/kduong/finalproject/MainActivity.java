@@ -19,19 +19,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_container);
 
         // This is to test the buttons created in main to see if the buttons in the fragment will show
-        /*mSearchButton = (Button) this.findViewById(R.id.search);
+        mSearchButton = (Button) this.findViewById(R.id.search);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                Fragment fragment = new OptionFragment();
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
             }
-        });*/
+        });
 
         if(savedInstanceState == null) {
             Fragment fragment = new HomeFragment();
             FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
+            fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
         }
     }
