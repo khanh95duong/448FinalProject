@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Created by The Ngo on 3/12/2018.
@@ -14,12 +15,22 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private Button mSignUp;
     private Button mSubmitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_login);
+
+        mSignUp = (Button) this.findViewById(R.id.sign_up);
+        mSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "This will open up a new page for user to sign up", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         mSubmitButton = (Button) this.findViewById(R.id.submit);
         mSubmitButton.setOnClickListener(new View.OnClickListener() {

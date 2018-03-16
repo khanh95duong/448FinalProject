@@ -9,4 +9,11 @@
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
     <string name="title_activity_maps">Map</string>
+
+    <string-array name="Locations">
+        <item>Golden</item>
+        <item>Denver</item>
+        <item>Lakewood</item>
+        <item>Aurora</item>
+    </string-array>
 </resources>

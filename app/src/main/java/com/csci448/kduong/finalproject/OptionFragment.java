@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.Inflater;
 
 /**
@@ -37,7 +40,10 @@ public class OptionFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
         return v;
     }
+
 
 }
