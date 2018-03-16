@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by The Ngo on 3/12/2018.
@@ -22,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_login);
+        Fabric.with(this, new Crashlytics());
 
         mSignUp = (Button) this.findViewById(R.id.sign_up);
         mSignUp.setOnClickListener(new View.OnClickListener() {
