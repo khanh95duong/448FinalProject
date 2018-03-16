@@ -54,5 +54,4 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
-
 }

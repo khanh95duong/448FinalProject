@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
-
-
         // This is to test the buttons created in main to see if the buttons in the fragment will show
         /*mSearchButton = (Button) this.findViewById(R.id.search);
         mSearchButton.setOnClickListener(new View.OnClickListener() {
