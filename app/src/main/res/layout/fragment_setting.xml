@@ -41,17 +41,20 @@
 
     </LinearLayout>
 
-    <Button
+    <!--<Button
+        android:id="@+id/about_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="About"/>
 
     <Button
+        android:id="@+id/tas_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Term and Service"/>
+        android:text="Term and Service"/> -->
 
     <Button
+        android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"/>
