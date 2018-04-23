@@ -10,37 +10,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="User Login"/>
+        android:text="User Registration"/>
 
     <EditText
-        android:id="@+id/user_name"
+        android:id="@+id/register_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
         android:layout_margin="15dp"
+        android:inputType="textEmailAddress"
         android:hint="Username"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:layout_margin="15dp"
+        android:inputType="textPassword"
         android:hint="Password"/>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="@string/login"/>
+        android:text="@string/register"/>
 
     <TextView
-        android:id="@+id/to_register"
+        android:id="@+id/to_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an account? Sign Up Here!"/>
-
+        android:text="Already signed up? Log In Here!"/>
 
 
 </LinearLayout>
