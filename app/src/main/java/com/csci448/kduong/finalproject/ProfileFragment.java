@@ -1,12 +1,24 @@
 package com.csci448.kduong.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by darks on 3/14/2018.
@@ -14,21 +26,57 @@ import android.widget.Toast;
 
 public class ProfileFragment extends Fragment {
 
-    FloatingActionButton mEdit;
+    private FloatingActionButton mEdit;
+    private TextView mName, mAge, mBio;
+
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseUser mUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mUser = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(mUser.getUid());
+
+        mName = (TextView) v.findViewById(R.id.profile_name);
+        mAge = (TextView) v.findViewById(R.id.profile_age);
+        mBio = (TextView) v.findViewById(R.id.profile_bio);
+
+
+        loadInfo();
+
         mEdit = (FloatingActionButton) v.findViewById(R.id.edit_profile);
         mEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "This will open up a new page for user to edit their profile", Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(getContext(), "This will open up a new page for user to edit their profile", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
+                startActivity(intent);
             }
         });
 
         return v;
+    }
+
+    public void loadInfo() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    mName.setText(dataSnapshot.child("name").getValue().toString());
+                    mAge.setText(dataSnapshot.child("age").getValue().toString());
+                    mBio.setText(dataSnapshot.child("bio").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
