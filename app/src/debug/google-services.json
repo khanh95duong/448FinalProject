@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "876555410482",
+    "firebase_url": "https://friendies-d69bb.firebaseio.com",
+    "project_id": "friendies-d69bb",
+    "storage_bucket": "friendies-d69bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876555410482:android:18377c74f94fcc1e",
+        "android_client_info": {
+          "package_name": "com.csci448.kduong.finalproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876555410482-87ulkvpufnc8j545l132ljscej0dp1mg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPeY6AWnCS_0eQ-6tOmr0fFQDwtkapJYc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
