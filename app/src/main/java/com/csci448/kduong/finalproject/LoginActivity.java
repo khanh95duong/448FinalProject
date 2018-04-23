@@ -83,12 +83,12 @@ public class LoginActivity extends AppCompatActivity {
 
         // check to see if username or password is empty, if so, do not move on
         if(TextUtils.isEmpty(username)) {
-            Toast.makeText(this, "Please enter an email for the username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter an email for the username", Toast.LENGTH_LONG).show();
             return;
         }
 
         if(TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please enter a password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter a password", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -101,10 +101,14 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        mProgressDialog.dismiss();
                         if(task.isSuccessful()) {
                             finish();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);                        }
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Email or Password is incorrect, please try again   ", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 

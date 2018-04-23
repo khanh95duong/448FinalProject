@@ -84,12 +84,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         // check to see if username or password is empty, if so, do not move on
         if(TextUtils.isEmpty(username)) {
-            Toast.makeText(this, "Please enter an email for the username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter an email for the username", Toast.LENGTH_LONG).show();
             return;
         }
 
         if(TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please enter a password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter a password", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -102,14 +102,15 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        mProgressDialog.dismiss();
                         if(task.isSuccessful()) {
                             finish();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Could not register the user", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Could not register the user", Toast.LENGTH_LONG).show();
                         }
-                        mProgressDialog.dismiss();
+
                     }
                 });
     }

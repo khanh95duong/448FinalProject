@@ -10,6 +10,8 @@
     <string name="profile">Profile</string>
     <string name="title_activity_maps">Map</string>
     <string name="register">Register</string>
+    <string name="email_input">Enter your email here</string>
+    <string name="password_input">Enter your password here</string>
 
     <string-array name="Locations">
         <item>Golden</item>
