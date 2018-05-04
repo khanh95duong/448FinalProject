@@ -41,7 +41,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         // get firebase and get db reference and user
         mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference(user.getUid());
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
 
         mName = (EditText) findViewById(R.id.edit_name);
         mAge = (EditText) findViewById(R.id.edit_age);
@@ -72,10 +72,6 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
         finish();
-        // start a new activity in main, there might be a better way to do this
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-
     }
 
     // load current information into the edit texts

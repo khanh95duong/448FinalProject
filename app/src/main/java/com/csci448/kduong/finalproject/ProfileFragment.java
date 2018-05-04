@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(mUser.getUid());
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
 
         mName = (TextView) v.findViewById(R.id.profile_name);
         mAge = (TextView) v.findViewById(R.id.profile_age);
@@ -53,14 +53,20 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(getContext(), "This will open up a new page for user to edit their profile", Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                //getActivity().finish();
                 Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
 
         return v;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loadInfo();
+    }
+
 
     public void loadInfo() {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

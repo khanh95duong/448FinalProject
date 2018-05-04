@@ -14,6 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -27,6 +35,10 @@ public class HomeFragment extends Fragment {
 
     FloatingActionButton mAddEvents;
     RecyclerView mEventRecyclerView;
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseUser mUser;
+
     private EventAdapter mAdapter;
     private ActivityLifecycleManager.Callbacks mCallbacks;
 
@@ -65,6 +77,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceStates) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mUser = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+
         mEventRecyclerView = (RecyclerView) view.findViewById(R.id.events_recycler_view);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -78,6 +94,28 @@ public class HomeFragment extends Fragment {
 
         updateUI();
         return view;
+    }
+
+    public void loadInfo() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Event ev = new Event();
+                        ev.setTitle(ds.child("title").getValue().toString());
+                        ev.setHost(ds.child("host").getValue().toString());
+                        ev.setDate(ds.child("date").getValue().toString());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

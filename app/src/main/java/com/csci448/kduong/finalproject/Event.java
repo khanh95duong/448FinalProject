@@ -10,8 +10,9 @@ import java.util.UUID;
 public class Event {
     private UUID mId;
     private String mTitle;
-    private Date mDate;
+    private String mDate;
     private String mHost;
+    private String mAddress;
 
     public Event() {
         this(UUID.randomUUID());
@@ -19,7 +20,6 @@ public class Event {
 
     public Event(UUID id) {
         mId = id;
-        mDate = new Date();
     }
 
     public UUID getId() {
@@ -38,11 +38,11 @@ public class Event {
         mTitle = title;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return mDate;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         mDate = date;
     }
 
@@ -52,5 +52,13 @@ public class Event {
 
     public void setHost(String host) {
         mHost = host;
+    }
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(String address) {
+        mAddress = address;
     }
 }
