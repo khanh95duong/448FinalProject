@@ -47,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
 
     // Data to automatically add to database after registering
-    private EditText mName, mAge, mBio;
     private DatabaseReference mDatabaseReference;
 
     @Override
@@ -78,8 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // close the activity
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -125,7 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(RegisterActivity.this, "Could not register the user", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 });
     }
@@ -145,5 +141,4 @@ public class RegisterActivity extends AppCompatActivity {
         Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
         finish();
     }
-
 }
