@@ -68,8 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish(); // close the activity
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -110,9 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(RegisterActivity.this, "Could not register the user", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 });
     }
-
 }

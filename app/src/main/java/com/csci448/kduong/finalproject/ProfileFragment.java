@@ -45,15 +45,13 @@ public class ProfileFragment extends Fragment {
         mAge = (TextView) v.findViewById(R.id.profile_age);
         mBio = (TextView) v.findViewById(R.id.profile_bio);
 
-
         loadInfo();
 
         mEdit = (FloatingActionButton) v.findViewById(R.id.edit_profile);
         mEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getContext(), "This will open up a new page for user to edit their profile", Toast.LENGTH_SHORT).show();
-                //getActivity().finish();
+                // This will open up a new page for user to edit their profile
                 Intent intent = new Intent(getActivity(), ProfileEditActivity.class);
                 startActivityForResult(intent, 0);
             }
