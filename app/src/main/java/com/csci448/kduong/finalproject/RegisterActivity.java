@@ -19,6 +19,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -39,6 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
     // other variables
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
+
+    // Data to automatically add to database after registering
+    private DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +111,11 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         mProgressDialog.dismiss();
                         if(task.isSuccessful()) {
+                            // get firebase and get db reference and user
+                            mFirebaseAuth = FirebaseAuth.getInstance();
+                            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
+                            saveInformation();
                             finish();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
@@ -110,5 +124,21 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    // save the current information to the database
+    public void saveInformation() {
+        String name = "Give me a name ;)";
+        int age = 99    ;
+        String bio = "Give me a bio ;D";
+
+        UserInformation userInfo = new UserInformation(name, age, bio);
+
+        // Add information to database under the current user
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference.setValue(userInfo);
+
+        Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
+        finish();
     }
 }

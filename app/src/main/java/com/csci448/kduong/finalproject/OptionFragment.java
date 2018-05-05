@@ -19,7 +19,7 @@ import java.util.zip.Inflater;
  * Created by The Ngo on 3/12/2018.
  */
 
-public class OptionFragment extends Fragment {
+public class    OptionFragment extends Fragment {
     private static final String TAG = "SearchOptionsFragment";
     private static final String[] LOCATION_PERMISSIONS = new String[] {
             Manifest.permission.ACCESS_FINE_LOCATION,
