@@ -128,9 +128,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     // save the current information to the database
     public void saveInformation() {
-        String name = "No Name";
+        String name = "Give me a name ;)";
         int age = 99    ;
-        String bio = "No Bio";
+        String bio = "Give me a bio ;D";
 
         UserInformation userInfo = new UserInformation(name, age, bio);
 
