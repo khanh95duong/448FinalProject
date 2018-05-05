@@ -11,6 +11,7 @@ public class Event {
     private UUID mId;
     private String mTitle;
     private String mDate;
+    private String mTime;
     private String mHost;
     private String mAddress;
 
@@ -44,6 +45,14 @@ public class Event {
 
     public void setDate(String date) {
         mDate = date;
+    }
+
+    public String getTime() {
+        return mTime;
+    }
+
+    public void setTime(String time) {
+        mTime = time;
     }
 
     public String getHost() {

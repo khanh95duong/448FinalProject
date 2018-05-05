@@ -12,6 +12,15 @@
     <string name="register">Register</string>
     <string name="email_input">Enter your email here</string>
     <string name="password_input">Enter your password here</string>
+    <string name="already_have">Already signed up? Log In Here!</string>
+    <string name="register_title">User Registration</string>
+
+    <string name="new_event_title">New Event</string>
+    <string name="set_date">Set Date</string>
+    <string name="set_time">Set Time</string>
+    <string name="event_name_input">Name your event</string>
+    <string name="event_address_input">Enter the address of your event</string>
+    <string name="add_event_button">Add Event!</string>
 
     <string-array name="Locations">
         <item>Golden</item>

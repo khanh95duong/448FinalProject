@@ -23,12 +23,6 @@ public class EventLab {
 
     private EventLab(Context context) {
         mEvents = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Event ev = new Event();
-            ev.setTitle("Event #" + i);
-            ev.setHost("Me");
-            mEvents.add(ev);
-        }
     }
 
     public List<Event> getEvents() {
@@ -42,5 +36,9 @@ public class EventLab {
             }
         }
         return null;
+    }
+
+    public void addEvent(Event e) {
+        mEvents.add(e);
     }
 }

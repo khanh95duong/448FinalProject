@@ -1,6 +1,7 @@
 package com.csci448.kduong.finalproject;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -88,7 +89,8 @@ public class HomeFragment extends Fragment {
         mAddEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "This will open up a new page for user to add events", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getActivity(), AddEventActivity.class);
+                startActivityForResult(i, 0);
             }
         });
 
