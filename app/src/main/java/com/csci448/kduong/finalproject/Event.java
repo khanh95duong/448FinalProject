@@ -1,5 +1,7 @@
 package com.csci448.kduong.finalproject;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -25,6 +27,25 @@ public class Event {
 
     public Event(UUID id) {
         mId = id;
+        mParticipants = new ArrayList<String>();
+        mParticipantsId = new ArrayList<String>();
+    }
+
+    public Event(String address, String date, String host, String hostId, String id, ArrayList<String> participants, ArrayList<String> participantsId, String time, String title) {
+        /*
+        mAddress = address;
+        mDate = date;
+        mHost = host;
+        mHostId = hostId;
+        mId = UUID.fromString(id);
+        mParticipants = participants;
+        mParticipantsId = participantsId;
+        mTime = time;
+        mTitle = title;
+        */
+        Log.i("QueryEvent", address);
+        Log.i("QueryEvent", date);
+        mId = UUID.randomUUID();
         mParticipants = new ArrayList<String>();
         mParticipantsId = new ArrayList<String>();
     }

@@ -1,6 +1,7 @@
 package com.csci448.kduong.finalproject;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,8 +45,17 @@ public class EventLab {
     }
 
     public List<Event> getEvents() {
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Event event = dataSnapshot.getValue(Event.class);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
         return mEvents;
     }
 
