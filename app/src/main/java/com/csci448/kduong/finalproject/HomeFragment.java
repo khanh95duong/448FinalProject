@@ -3,10 +3,12 @@ package com.csci448.kduong.finalproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,30 +96,19 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        updateUI();
         return view;
     }
 
-    public void loadInfo() {
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Event ev = new Event();
-                        ev.setTitle(ds.child("title").getValue().toString());
-                        ev.setHost(ds.child("host").getValue().toString());
-                        ev.setDate(ds.child("date").getValue().toString());
-                    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        updateUI();
+    }
 
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateUI();
     }
 
     @Override
@@ -133,10 +124,11 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateUI() {
-        EventLab eventLab = EventLab.getInstance();
-        List<Event> events = eventLab.getEvents();
+        List<Event> events = EventLab.getInstance().getEvents();
 
+        Log.i("EventSize", ""+events.size());
         mAdapter = new EventAdapter(events);
         mEventRecyclerView.setAdapter(mAdapter);
+        mEventRecyclerView.invalidate();
     }
 }

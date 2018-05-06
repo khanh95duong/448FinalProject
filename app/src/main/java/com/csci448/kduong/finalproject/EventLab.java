@@ -27,7 +27,6 @@ public class EventLab {
     private FirebaseUser mUser;
     private String userName;
     private String userId;
-    private ArrayList<Event> eventList = new ArrayList<>();
 
     public static EventLab getInstance() {
         if (sEventLab == null) {
@@ -47,38 +46,7 @@ public class EventLab {
     }
 
     public List<Event> getEvents() {
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
-                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Event ev = new Event();
-                        //Log.d("DATA", ds.toString());
-                        //Log.d("DATA VALUES", ds.child("id").getValue().toString());
-                        ev.setId(ds.child("id").getValue().toString());
-                        ev.setTitle(ds.child("title").getValue().toString());
-                        ev.setAddress(ds.child("address").getValue().toString());
-                        ev.setDate(ds.child("date").getValue().toString());
-                        ev.setTime(ds.child("time").getValue().toString());
-                        ev.setHost(ds.child("host").getValue().toString());
-                        ev.setHostId(ds.child("hostId").getValue().toString());
-
-                        for(DataSnapshot p : ds.child("participants").getChildren()) {
-                            ev.addParticipant(p.getValue().toString());
-                        }
-                        for(DataSnapshot p : ds.child("participantsId").getChildren()) {
-                            ev.addParticipantId(p.getValue().toString());
-                        }
-                        mEvents.add(ev);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        loadEvents();
         return mEvents;
     }
 
@@ -124,6 +92,7 @@ public class EventLab {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChildren()) {
+                    mEvents.clear();
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
                         Event ev = new Event();
                         //Log.d("DATA", ds.toString());
@@ -142,7 +111,7 @@ public class EventLab {
                        for(DataSnapshot p : ds.child("participantsId").getChildren()) {
                             ev.addParticipantId(p.getValue().toString());
                        }
-                       eventList.add(ev);
+                       mEvents.add(ev);
                     }   
                 }
             }
