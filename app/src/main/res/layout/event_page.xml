@@ -52,6 +52,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/join_event"
         android:layout_gravity="bottom|center"
         android:layout_width="256dp"
         android:layout_height="wrap_content"

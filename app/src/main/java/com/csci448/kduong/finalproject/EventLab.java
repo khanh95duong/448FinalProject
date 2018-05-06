@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +28,8 @@ public class EventLab {
     private FirebaseUser mUser;
     private String userName;
     private String userId;
+    private ArrayList<String> participants;
+    private ArrayList<String> participantsId;
 
     public static EventLab getInstance() {
         if (sEventLab == null) {
@@ -60,6 +63,56 @@ public class EventLab {
         ev.addParticipant(userName);
         ev.addParticipantId(userId);
         mDatabaseReference.child(ev.getId().toString()).setValue(ev);
+    }
+
+    public void joinEvent(String eventId, String name, String id) {
+        participants = new ArrayList<>();
+        participantsId = new ArrayList<>();
+        loadInfo();
+        addParticipants(eventId, name);
+        addParticipantsId(eventId, id);
+    }
+
+    public void addParticipants(final String eventId, final String name) {
+        DatabaseReference partDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events").child(eventId).child("participants");
+        partDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    participants.clear();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        participants.add(ds.getValue().toString());
+                        Log.i("Participants", ""+participants.size());
+                    }
+                    participants.add(name);
+                    mDatabaseReference.child(eventId).child("participants").setValue(participants);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void addParticipantsId(final String eventId, final String id) {
+        DatabaseReference partDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events").child(eventId).child("participantsId");
+        partDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    participantsId.clear();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        participantsId.add(ds.getValue().toString());                   }
+                }
+                participantsId.add(id);
+                mDatabaseReference.child(eventId).child("participantsId").setValue(participantsId);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void loadInfo() {
