@@ -146,7 +146,7 @@ public class AddEventActivity extends AppCompatActivity {
             String address = eventAddress.getText().toString().trim();
             String date = setDate.getText().toString();
             String time = setTime.getText().toString();
-            UUID uuid = UUID.randomUUID();
+            String uuid = UUID.randomUUID().toString();
 
             Event eventInfo = new Event(uuid);
             eventInfo.setTitle(name);

@@ -27,6 +27,7 @@ public class EventLab {
     private FirebaseUser mUser;
     private String userName;
     private String userId;
+    private ArrayList<Event> eventList = new ArrayList<>();
 
     public static EventLab getInstance() {
         if (sEventLab == null) {
@@ -42,13 +43,35 @@ public class EventLab {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events");
         mEvents = new ArrayList<>();
         loadInfo();
+        loadEvents();
     }
 
     public List<Event> getEvents() {
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Event event = dataSnapshot.getValue(Event.class);
+                if (dataSnapshot.hasChildren()) {
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Event ev = new Event();
+                        //Log.d("DATA", ds.toString());
+                        //Log.d("DATA VALUES", ds.child("id").getValue().toString());
+                        ev.setId(ds.child("id").getValue().toString());
+                        ev.setTitle(ds.child("title").getValue().toString());
+                        ev.setAddress(ds.child("address").getValue().toString());
+                        ev.setDate(ds.child("date").getValue().toString());
+                        ev.setTime(ds.child("time").getValue().toString());
+                        ev.setHost(ds.child("host").getValue().toString());
+                        ev.setHostId(ds.child("hostId").getValue().toString());
+
+                        for(DataSnapshot p : ds.child("participants").getChildren()) {
+                            ev.addParticipant(p.getValue().toString());
+                        }
+                        for(DataSnapshot p : ds.child("participantsId").getChildren()) {
+                            ev.addParticipantId(p.getValue().toString());
+                        }
+                        mEvents.add(ev);
+                    }
+                }
             }
 
             @Override
@@ -86,6 +109,41 @@ public class EventLab {
                 if (dataSnapshot.hasChildren()) {
                     userName = dataSnapshot.child("name").getValue().toString();
                     userId = mUser.getUid().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void loadEvents() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Event ev = new Event();
+                        //Log.d("DATA", ds.toString());
+                        //Log.d("DATA VALUES", ds.child("id").getValue().toString());
+                        ev.setId(ds.child("id").getValue().toString());
+                        ev.setTitle(ds.child("title").getValue().toString());
+                        ev.setAddress(ds.child("address").getValue().toString());
+                        ev.setDate(ds.child("date").getValue().toString());
+                        ev.setTime(ds.child("time").getValue().toString());
+                        ev.setHost(ds.child("host").getValue().toString());
+                        ev.setHostId(ds.child("hostId").getValue().toString());
+
+                       for(DataSnapshot p : ds.child("participants").getChildren()) {
+                           ev.addParticipant(p.getValue().toString());
+                       }
+                       for(DataSnapshot p : ds.child("participantsId").getChildren()) {
+                            ev.addParticipantId(p.getValue().toString());
+                       }
+                       eventList.add(ev);
+                    }   
                 }
             }
 

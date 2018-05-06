@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 
 public class Event {
-    private UUID mId;
+    private String mId;
     private String mTitle;
     private String mDate;
     private String mTime;
@@ -22,10 +22,10 @@ public class Event {
     private ArrayList<String> mParticipantsId;
 
     public Event() {
-        this(UUID.randomUUID());
+        this(UUID.randomUUID().toString());
     }
 
-    public Event(UUID id) {
+    public Event(String id) {
         mId = id;
         mParticipants = new ArrayList<String>();
         mParticipantsId = new ArrayList<String>();
@@ -45,16 +45,16 @@ public class Event {
         */
         Log.i("QueryEvent", address);
         Log.i("QueryEvent", date);
-        mId = UUID.randomUUID();
+        mId = UUID.randomUUID().toString();
         mParticipants = new ArrayList<String>();
         mParticipantsId = new ArrayList<String>();
     }
 
-    public UUID getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         mId = id;
     }
 
