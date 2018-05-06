@@ -2,6 +2,14 @@ package com.csci448.kduong.finalproject;
 
 import android.content.Context;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,19 +21,31 @@ import java.util.UUID;
 public class EventLab {
     private static EventLab sEventLab;
     private List<Event> mEvents;
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseUser mUser;
+    private String userName;
+    private String userId;
 
-    public static EventLab get(Context context) {
+    public static EventLab getInstance() {
         if (sEventLab == null) {
-            sEventLab = new EventLab(context);
+            sEventLab = new EventLab();
         }
         return sEventLab;
     }
 
-    private EventLab(Context context) {
+    private EventLab() {
+        // get firebase and get db reference and user
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mUser = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events");
         mEvents = new ArrayList<>();
+        loadInfo();
     }
 
     public List<Event> getEvents() {
+
+
         return mEvents;
     }
 
@@ -38,7 +58,32 @@ public class EventLab {
         return null;
     }
 
-    public void addEvent(Event e) {
-        mEvents.add(e);
+    public void addEvent(Event ev) {
+        // Add information to database under the current user
+        ev.setHost(userName);
+        ev.setHostId(userId);
+        ev.addParticipant(userName);
+        ev.addParticipantId(userId);
+        mDatabaseReference.child(ev.getTitle()).setValue(ev);
     }
+
+    private void loadInfo() {
+        // get user information
+        DatabaseReference userDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
+        userDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    userName = dataSnapshot.child("name").getValue().toString();
+                    userId = mUser.getUid().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

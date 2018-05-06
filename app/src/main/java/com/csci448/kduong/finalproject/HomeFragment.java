@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateUI() {
-        EventLab eventLab = EventLab.get(getActivity());
+        EventLab eventLab = EventLab.getInstance();
         List<Event> events = eventLab.getEvents();
 
         mAdapter = new EventAdapter(events);
