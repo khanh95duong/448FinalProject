@@ -143,7 +143,8 @@ public class EventLab {
                             ev.addParticipantId(p.getValue().toString());
                        }
                        eventList.add(ev);
-                    }   
+                    }
+                    Log.d("EVENTS SIZE", ""+eventList.size());
                 }
             }
 
