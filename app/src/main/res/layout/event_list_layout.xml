@@ -2,17 +2,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="48dp"
+    android:background="@drawable/border">
 
     <TextView
         android:id="@+id/event_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="24dp"
         android:text="Event Title"/>
 
     <TextView
         android:id="@+id/event_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="18dp"
         android:text="Event Date"/>
+
+    <TextView
+        android:id="@+id/event_host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="Event Host"/>
 </LinearLayout>

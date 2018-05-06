@@ -22,6 +22,8 @@
     <string name="event_address_input">Enter the address of your event</string>
     <string name="add_event_button">Add Event!</string>
 
+    <string name="participants">Participants: </string>
+
     <string-array name="Locations">
         <item>Golden</item>
         <item>Denver</item>

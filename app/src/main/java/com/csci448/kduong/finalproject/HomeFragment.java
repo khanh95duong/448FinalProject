@@ -45,10 +45,34 @@ public class HomeFragment extends Fragment {
     private EventAdapter mAdapter;
     private ActivityLifecycleManager.Callbacks mCallbacks;
 
-    private class EventHolder extends RecyclerView.ViewHolder {
+    private class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        Event mEvent;
+        private TextView mTitleTextView;
+        private TextView mDateTextView;
+        private TextView mHostTextView;
+
         public EventHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.event_list_layout, parent, false));
+            itemView.setOnClickListener(this);
+            mTitleTextView = (TextView)itemView.findViewById(R.id.event_title);
+            mDateTextView = (TextView) itemView.findViewById(R.id.event_date);
+            mHostTextView = (TextView) itemView.findViewById(R.id.event_host);
         }
+
+        public void bind(Event event) {
+            mEvent = event;
+            mTitleTextView.setText(mEvent.getTitle());
+            mDateTextView.setText(mEvent.getDate());
+            mHostTextView.setText(mEvent.getHost());
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getActivity(), EventActivity.class);
+            intent.putExtra("EventId", mEvent.getId());
+            startActivityForResult(intent, 0);
+        }
+
     }
 
     private class EventAdapter extends RecyclerView.Adapter<EventHolder> {
@@ -66,7 +90,8 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(EventHolder holder, int position) {
-
+            Event event = mEvents.get(position);
+            holder.bind(event);
         }
 
         @Override
@@ -97,6 +122,12 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        updateUI();
     }
 
     @Override

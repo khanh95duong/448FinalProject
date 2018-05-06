@@ -52,7 +52,7 @@ public class EventLab {
 
     public Event getEvent(UUID id) {
         for (Event ev : mEvents) {
-            if (ev.getId().equals(id)) {
+            if (ev.getId().toString().equals(id.toString())) {
                 return ev;
             }
         }

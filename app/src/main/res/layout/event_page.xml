@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/tv_activity_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/event_activity_title"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="48dp"
+            android:text="Event Title"/>
+
+        <TextView
+            android:id="@+id/event_activity_date"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:text="Date"/>
+
+        <TextView
+            android:id="@+id/event_actvity_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:text="Hosted by "/>
+
+        <TextView
+            android:id="@+id/event_activity_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Address"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/participants"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_gravity="bottom|center"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:text="Join!"/>
+
+</FrameLayout>
