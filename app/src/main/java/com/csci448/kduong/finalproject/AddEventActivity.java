@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,10 @@ public class AddEventActivity extends AppCompatActivity {
     private String mEventTime;
     private int year, month, day, hour, min;
 
+    // booleans to make sure time and date are set
+    private boolean timeIsSelected = false;
+    private boolean dateIsSelected = false;
+
     private EditText eventName, eventAddress;
 
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
@@ -38,6 +43,7 @@ public class AddEventActivity extends AppCompatActivity {
 
             mEventDate = nf.format(i1 + 1) + "/" + nf.format(i2) + "/" + nf.format(i);
             setDate.setText(mEventDate);
+            dateIsSelected = true;
         }
     };
 
@@ -64,6 +70,7 @@ public class AddEventActivity extends AppCompatActivity {
 
             mEventTime = nf.format(i) + ":" + nf.format(i1) + " " + ap;
             setTime.setText(mEventTime);
+            timeIsSelected = true;
         }
     };
 
@@ -122,23 +129,37 @@ public class AddEventActivity extends AppCompatActivity {
 
     // save the current information to the database
     public void saveInformation() {
-        String name = eventName.getText().toString().trim();
-        String address = eventAddress.getText().toString().trim();
-        String date = mEventDate;
-        String time = mEventTime;
-        UUID uuid = UUID.randomUUID();
+        if(TextUtils.isEmpty(eventName.getText())) {
+            eventName.setError("Event name is required");
+        }
+        else if(TextUtils.isEmpty(eventAddress.getText())) {
+            eventAddress.setError("Address is required");
+        }
+        else if(!dateIsSelected) {
+            setDate.setError("Date is required");
+        }
+        else if(!timeIsSelected) {
+            setTime.setError("Time is required");
+        }
+        else {
+            String name = eventName.getText().toString().trim();
+            String address = eventAddress.getText().toString().trim();
+            String date = setDate.getText().toString();
+            String time = setTime.getText().toString();
+            UUID uuid = UUID.randomUUID();
 
-        Event eventInfo = new Event(uuid);
-        eventInfo.setTitle(name);
-        eventInfo.setId(uuid);
-        eventInfo.setAddress(address);
-        eventInfo.setDate(date);
-        eventInfo.setTime(time);
+            Event eventInfo = new Event(uuid);
+            eventInfo.setTitle(name);
+            eventInfo.setId(uuid);
+            eventInfo.setAddress(address);
+            eventInfo.setDate(date);
+            eventInfo.setTime(time);
 
-        EventLab.getInstance().addEvent(eventInfo);
+            EventLab.getInstance().addEvent(eventInfo);
 
-        Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
-        finish();
+            Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
 }
