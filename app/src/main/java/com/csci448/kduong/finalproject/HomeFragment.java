@@ -2,6 +2,10 @@ package com.csci448.kduong.finalproject;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -41,6 +46,7 @@ public class HomeFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
     private FirebaseUser mUser;
+    private List<Event> events;
 
     private EventAdapter mAdapter;
     private ActivityLifecycleManager.Callbacks mCallbacks;
@@ -82,7 +88,7 @@ public class HomeFragment extends Fragment {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events");
 
         mEventRecyclerView = (RecyclerView) view.findViewById(R.id.events_recycler_view);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -95,26 +101,27 @@ public class HomeFragment extends Fragment {
                 startActivityForResult(i, 0);
             }
         });
-
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateUI();
+
+        new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        updateUI();
+
+        new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+        new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -124,11 +131,36 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateUI() {
-        List<Event> events = EventLab.getInstance().getEvents();
-
-        Log.i("EventSize", ""+events.size());
+        events = EventLab.getInstance().getEvents();
         mAdapter = new EventAdapter(events);
         mEventRecyclerView.setAdapter(mAdapter);
         mEventRecyclerView.invalidate();
+    }
+
+    public void getSize() {
+        Log.i("Event SIZE HF", ""+events.size());
+    }
+
+    private class SearchTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute()
+        {
+            Log.i("START", "onPreExecute");
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            EventLab.getInstance().loadEvents();
+            Log.i("BACKGROUND", "doInBackground");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            updateUI();
+            Log.i("EVENT SIZE", ""+events.size());
+        }
     }
 }

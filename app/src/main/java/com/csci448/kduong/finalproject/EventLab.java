@@ -42,12 +42,6 @@ public class EventLab {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events");
         mEvents = new ArrayList<>();
         loadInfo();
-        loadEvents();
-    }
-
-    public List<Event> getEvents() {
-        loadEvents();
-        return mEvents;
     }
 
     public Event getEvent(UUID id) {
@@ -87,13 +81,17 @@ public class EventLab {
         });
     }
 
-    private void loadEvents() {
+    public List<Event> getEvents() {
+        return mEvents;
+    }
+
+    public void loadEvents() {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChildren()) {
                     mEvents.clear();
-                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         Event ev = new Event();
                         //Log.d("DATA", ds.toString());
                         //Log.d("DATA VALUES", ds.child("id").getValue().toString());
@@ -105,17 +103,16 @@ public class EventLab {
                         ev.setHost(ds.child("host").getValue().toString());
                         ev.setHostId(ds.child("hostId").getValue().toString());
 
-                       for(DataSnapshot p : ds.child("participants").getChildren()) {
-                           ev.addParticipant(p.getValue().toString());
-                       }
-                       for(DataSnapshot p : ds.child("participantsId").getChildren()) {
+                        for (DataSnapshot p : ds.child("participants").getChildren()) {
+                            ev.addParticipant(p.getValue().toString());
+                        }
+                        for (DataSnapshot p : ds.child("participantsId").getChildren()) {
                             ev.addParticipantId(p.getValue().toString());
-                       }
-                       mEvents.add(ev);
+                        }
+                        mEvents.add(ev);
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
