@@ -64,7 +64,7 @@ public class EventLab {
         ev.setHostId(userId);
         ev.addParticipant(userName);
         ev.addParticipantId(userId);
-        mDatabaseReference.child(ev.getTitle()).setValue(ev);
+        mDatabaseReference.child(ev.getId().toString()).setValue(ev);
     }
 
     private void loadInfo() {
