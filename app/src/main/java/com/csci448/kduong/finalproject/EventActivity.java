@@ -121,7 +121,6 @@ public class EventActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     public void getParticipantsId(final String eventId) {
