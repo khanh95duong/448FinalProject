@@ -106,6 +106,15 @@ public class Event {
         mParticipants.add(p);
     }
 
+    public boolean isAParticipant(String uid) {
+        for (String p : mParticipantsId) {
+            if (uid.equals(p)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<String> getParticipantsId() {
         return mParticipantsId;
     }

@@ -99,7 +99,11 @@ public class MapsFragment extends SupportMapFragment {
                 List<Address> addresses = geocoder.getFromLocationName(ev.getAddress(), 1);
                 if (addresses.size() > 0) {
                     LatLng newll = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(newll).title(ev.getTitle()));
+                    MarkerOptions marker = new MarkerOptions().position(newll).title(ev.getTitle());
+                    if (ev.isAParticipant(EventLab.getInstance().getUserId())) {
+                        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    }
+                    mMap.addMarker(marker);
                 }
             }
             catch (IOException e) {

@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="48dp"
-    android:background="@drawable/border">
+    android:foreground="@drawable/border">
 
     <TextView
         android:id="@+id/event_title"
