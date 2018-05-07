@@ -132,7 +132,16 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
 
+        makeMenu();
+    }
 
+    private void makeMenu() {
+        findViewById(R.id.go_back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

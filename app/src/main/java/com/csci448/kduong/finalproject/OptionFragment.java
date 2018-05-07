@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class    OptionFragment extends Fragment {
         mMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getActivity(), "Loading Maps...", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 startActivity(intent);
             }

@@ -1,10 +1,12 @@
 package com.csci448.kduong.finalproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,7 +28,7 @@ public class ViewParticipantProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_profile);
+        setContentView(R.layout.fragment_profile_wmenu);
         mUserId = getIntent().getStringExtra("UserId");
         FloatingActionButton fab = findViewById(R.id.edit_profile);
         fab.hide();
@@ -39,7 +41,17 @@ public class ViewParticipantProfile extends AppCompatActivity {
         mAge = (TextView) findViewById(R.id.profile_age);
         mBio = (TextView) findViewById(R.id.profile_bio);
 
+        makeMenu();
         loadInfo();
+    }
+
+    public void makeMenu() {
+        findViewById(R.id.go_back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void loadInfo() {

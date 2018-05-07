@@ -57,6 +57,17 @@ public class ProfileEditActivity extends AppCompatActivity {
                 saveInformation();
             }
         });
+
+        makeMenu();
+    }
+
+    public void makeMenu() {
+        findViewById(R.id.go_back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     // save the current information to the database

@@ -26,6 +26,7 @@ import java.util.UUID;
 public class EventActivity extends AppCompatActivity {
     private TextView mTitle;
     private TextView mDate;
+    private TextView mTime;
     private TextView mHost;
     private TextView mAddress;
     private LinearLayout mLinearLayout;
@@ -90,6 +91,9 @@ public class EventActivity extends AppCompatActivity {
         mDate = (TextView) findViewById(R.id.event_activity_date);
         mDate.setText(event.getDate());
 
+        mTime = (TextView) findViewById(R.id.event_activity_time);
+        mTime.setText(event.getTime());
+
         mHost = (TextView) findViewById(R.id.event_actvity_host);
         mHost.setText(event.getHost());
 
@@ -121,6 +125,7 @@ public class EventActivity extends AppCompatActivity {
         mLeave = (Button) findViewById(R.id.leave_event);
         mDeleteEvent = (Button) findViewById(R.id.delete_event);
 
+        makeMenu();
         getUser(eventId.toString());
 
         mJoin.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +152,15 @@ public class EventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EventLab.getInstance().deleteEvent(eventId.toString());
                 Toast.makeText(getApplicationContext(), "Your event was removed", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+    }
+
+    public void makeMenu() {
+        findViewById(R.id.go_back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
             }
         });

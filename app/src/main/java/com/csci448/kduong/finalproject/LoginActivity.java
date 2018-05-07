@@ -73,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             }
         });
+
+        findViewById(R.id.go_back_button).setVisibility(View.GONE);
     }
 
     // Log in after checking if everything is correct

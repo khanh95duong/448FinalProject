@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Edit Profile"/>
+    <include
+        android:id="@+id/toolbar_menu"
+        layout="@layout/toolbar_layout" />
 
-    <EditText
-        android:id="@+id/edit_age"
-        android:inputType="number"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your age here"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="64dp"
+        android:padding="24dp">
 
-    <EditText
-        android:id="@+id/edit_bio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:minLines="6"
-        android:maxLines="6"
-        android:focusable="true"
-        android:isScrollContainer="true"
-        android:hint="Type your bio here"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Edit Profile"/>
 
-    <Button
-        android:id="@+id/save_information"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Information"/>
+        <EditText
+            android:id="@+id/edit_age"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your age here"/>
+
+        <EditText
+            android:id="@+id/edit_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:minLines="6"
+            android:maxLines="6"
+            android:focusable="true"
+            android:isScrollContainer="true"
+            android:hint="Type your bio here"/>
+
+        <Button
+            android:id="@+id/save_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Information"/>
 
 
-</LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

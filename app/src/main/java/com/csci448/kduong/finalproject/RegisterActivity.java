@@ -82,6 +82,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.go_back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     //Register user after checking if everything is correct

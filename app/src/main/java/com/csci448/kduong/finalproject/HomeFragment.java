@@ -69,8 +69,8 @@ public class HomeFragment extends Fragment {
         public void bind(Event event) {
             mEvent = event;
             mTitleTextView.setText(mEvent.getTitle());
-            mDateTextView.setText(mEvent.getDate());
-            mHostTextView.setText(mEvent.getHost());
+            mDateTextView.setText(mEvent.getDate() + " at " + mEvent.getTime());
+            mHostTextView.setText("Hosted by: " + mEvent.getHost());
             if (mEvent.isAParticipant(mUser.getUid())) {
                 itemView.setBackgroundColor(0xff00ff00);
             }

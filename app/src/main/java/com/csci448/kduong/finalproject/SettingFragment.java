@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingFragment extends Fragment {
 
-    private Button mLogout;
+    private ImageButton mLogout;
     private FirebaseAuth mFirebaseAuth;
 
     @Override
@@ -36,7 +37,7 @@ public class SettingFragment extends Fragment {
             startActivity(intent);
         }
 
-        mLogout = (Button) v.findViewById(R.id.logout_button);
+        mLogout = (ImageButton) v.findViewById(R.id.logout_button);
         mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,11 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar_menu"
+        layout="@layout/toolbar_layout" />
+
     <LinearLayout
         android:id="@+id/tv_activity_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:layout_marginTop="64dp"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -26,6 +31,13 @@
             android:layout_height="wrap_content"
             android:textSize="24dp"
             android:text="Date"/>
+
+        <TextView
+            android:id="@+id/event_activity_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:text="Time"/>
 
         <TextView
             android:id="@+id/event_actvity_host"
