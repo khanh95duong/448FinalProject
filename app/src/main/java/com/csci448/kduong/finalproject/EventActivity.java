@@ -45,7 +45,7 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_page);
         final UUID eventId = UUID.fromString((String) getIntent().getSerializableExtra("EventId"));
-        Event event = EventLab.getInstance().getEvent(eventId);
+        final Event event = EventLab.getInstance().getEvent(eventId);
 
         // get firebase and get db reference and user
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -67,10 +67,22 @@ public class EventActivity extends AppCompatActivity {
 
         mLinearLayout = (LinearLayout) findViewById(R.id.tv_activity_holder);
 
-        for (String s : event.getParticipants()) {
+        for (int i = 0; i < event.getParticipants().size(); i++) {
+            final int j = i;
+            String s = event.getParticipants().get(i);
             TextView t = new TextView(this);
             t.setText(s);
+            t.setBackground(getResources().getDrawable(R.drawable.border));
+            t.setTextSize(24.0f);
             t.setGravity(Gravity.CENTER_HORIZONTAL);
+            t.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(EventActivity.this, ViewParticipantProfile.class);
+                    intent.putExtra("UserId", event.getParticipantsId().get(j));
+                    startActivity(intent);
+                }
+            });
             mLinearLayout.addView(t);
         }
 
