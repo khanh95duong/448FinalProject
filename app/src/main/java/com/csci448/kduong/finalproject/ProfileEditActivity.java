@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,18 +61,28 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     // save the current information to the database
     public void saveInformation() {
-        String name = mName.getText().toString().trim();
-        int age = Integer.valueOf(mAge.getText().toString().trim());
-        String bio = mBio.getText().toString().trim();
+        if(TextUtils.isEmpty(mName.getText())) {
+            mName.setError("Name is required");
+        }
+        else if(TextUtils.isEmpty(mAge.getText())) {
+            mAge.setError("Age is required");
+        }
+        else if(TextUtils.isEmpty(mBio.getText())) {
+            mBio.setError("Bio is required");
+        } else {
+            String name = mName.getText().toString().trim();
+            int age = Integer.valueOf(mAge.getText().toString().trim());
+            String bio = mBio.getText().toString().trim();
 
-        UserInformation userInfo = new UserInformation(name, age, bio);
+            UserInformation userInfo = new UserInformation(name, age, bio);
 
-        // Add information to database under the current user
-        FirebaseUser user = mFirebaseAuth.getCurrentUser();
-        mDatabaseReference.setValue(userInfo);
+            // Add information to database under the current user
+            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+            mDatabaseReference.setValue(userInfo);
 
-        Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
-        finish();
+            Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
     // load current information into the edit texts
