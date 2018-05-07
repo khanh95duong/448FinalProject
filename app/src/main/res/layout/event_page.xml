@@ -51,24 +51,32 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/delete_event"
-        android:layout_gravity="bottom|center"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/join_event"
-        android:layout_gravity="bottom|center"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:text="Join!"/>
-    <Button
-        android:id="@+id/leave_event"
-        android:layout_gravity="bottom|center"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="Leave!"/>
+        <Button
+            android:id="@+id/join_event"
+            android:layout_gravity="center"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:text="Join!"/>
+        <Button
+            android:id="@+id/leave_event"
+            android:layout_gravity="bottom|center"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Leave!"/>
+        <Button
+            android:id="@+id/delete_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 </FrameLayout>

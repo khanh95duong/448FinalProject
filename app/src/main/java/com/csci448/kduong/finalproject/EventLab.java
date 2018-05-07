@@ -1,6 +1,7 @@
 package com.csci448.kduong.finalproject;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -185,6 +186,11 @@ public class EventLab {
 
             }
         });
+    }
+
+    public void deleteEvent(String eventId) {
+        DatabaseReference eventBaseReference = FirebaseDatabase.getInstance().getReference().child("Events");
+        eventBaseReference.child(eventId).removeValue();
     }
 
     public String getUserName() {

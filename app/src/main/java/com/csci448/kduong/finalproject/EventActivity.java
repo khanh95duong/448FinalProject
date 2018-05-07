@@ -30,9 +30,11 @@ public class EventActivity extends AppCompatActivity {
     private LinearLayout mLinearLayout;
     private Button mJoin;
     private Button mLeave;
+    private Button mDeleteEvent;
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference eventBaseReference;
     private FirebaseUser mUser;
 
     private String userID;
@@ -42,14 +44,14 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_page);
-        UUID eventId = UUID.fromString((String) getIntent().getSerializableExtra("EventId"));
+        final UUID eventId = UUID.fromString((String) getIntent().getSerializableExtra("EventId"));
         Event event = EventLab.getInstance().getEvent(eventId);
 
         // get firebase and get db reference and user
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
-
+        eventBaseReference = FirebaseDatabase.getInstance().getReference().child("Events").child(eventId.toString());
 
         mTitle = (TextView) findViewById(R.id.event_activity_title);
         mTitle.setText(event.getTitle());
@@ -74,8 +76,12 @@ public class EventActivity extends AppCompatActivity {
 
         mJoin = (Button) findViewById(R.id.join_event);
         mLeave = (Button) findViewById(R.id.leave_event);
+        mDeleteEvent = (Button) findViewById(R.id.delete_event);
+
         getUser();
+        checkEvent();
         getParticipantsId(eventId.toString());
+
         mJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +97,15 @@ public class EventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EventLab.getInstance().leaveEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
                 Toast.makeText(getApplicationContext(), "You have left an event", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+
+        mDeleteEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventLab.getInstance().deleteEvent(eventId.toString());
+                Toast.makeText(getApplicationContext(), "Your event was removed", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -128,6 +143,24 @@ public class EventActivity extends AppCompatActivity {
                 if (dataSnapshot.hasChildren()) {
                     userID = mUser.getUid().toString();
                     userName = dataSnapshot.child("name").getValue().toString();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void checkEvent() {
+        eventBaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    Log.i("EVENT", dataSnapshot.child("hostId").getValue().toString());
+                    if(dataSnapshot.child("hostId").getValue().toString().equals(mUser.getUid().toString())) {
+                        mDeleteEvent.setVisibility(View.VISIBLE);
+                    }
                 }
             }
             @Override
