@@ -64,18 +64,20 @@ public class EventLab {
         mDatabaseReference.child(ev.getId().toString()).setValue(ev);
     }
 
-    public void joinEvent(String eventId, String name, String id) {
+    public String joinEvent(String eventId, String name, String id) {
         participants = new ArrayList<>();
         participantsId = new ArrayList<>();
         addParticipants(eventId, name, true);
         addParticipantsId(eventId, id, true);
+        return id;
     }
 
-    public void leaveEvent(String eventId, String name, String id) {
+    public String leaveEvent(String eventId, String name, String id) {
         participants = new ArrayList<>();
         participantsId = new ArrayList<>();
         addParticipants(eventId, name, false);
         addParticipantsId(eventId, id, false);
+        return id;
     }
 
     public void addParticipants(final String eventId, final String name, final boolean join) {

@@ -40,6 +40,7 @@ public class EventActivity extends AppCompatActivity {
 
     private String userID;
     private String userName;
+    private String IdThatChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class EventActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.getKey().equals("participantsId")) {
+                if (dataSnapshot.getKey().equals("participantsId") && IdThatChanged == userID) {
                     finish();
                 }
                 Log.i("EventActivity", dataSnapshot.getKey());
@@ -121,13 +122,12 @@ public class EventActivity extends AppCompatActivity {
         mDeleteEvent = (Button) findViewById(R.id.delete_event);
 
         getUser();
-        checkEvent();
         getParticipantsId(eventId.toString());
 
         mJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventLab.getInstance().joinEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
+                IdThatChanged = EventLab.getInstance().joinEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
                 Toast.makeText(getApplicationContext(), "You have joined an event", Toast.LENGTH_LONG).show();
                 //finish();
 
@@ -137,7 +137,7 @@ public class EventActivity extends AppCompatActivity {
         mLeave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventLab.getInstance().leaveEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
+                IdThatChanged = EventLab.getInstance().leaveEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
                 Toast.makeText(getApplicationContext(), "You have left an event", Toast.LENGTH_LONG).show();
                 //finish();
             }
@@ -169,6 +169,7 @@ public class EventActivity extends AppCompatActivity {
                         }
                     }
                 }
+                checkEvent();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
