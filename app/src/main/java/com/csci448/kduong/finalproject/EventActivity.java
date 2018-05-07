@@ -1,5 +1,6 @@
 package com.csci448.kduong.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -78,6 +80,9 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EventLab.getInstance().joinEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
+                Toast.makeText(getApplicationContext(), "You have joined an event", Toast.LENGTH_LONG).show();
+                finish();
+
             }
         });
 
@@ -85,6 +90,8 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EventLab.getInstance().leaveEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
+                Toast.makeText(getApplicationContext(), "You have left an event", Toast.LENGTH_LONG).show();
+                finish();
             }
         });
 
