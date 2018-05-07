@@ -121,8 +121,7 @@ public class EventActivity extends AppCompatActivity {
         mLeave = (Button) findViewById(R.id.leave_event);
         mDeleteEvent = (Button) findViewById(R.id.delete_event);
 
-        getUser();
-        getParticipantsId(eventId.toString());
+        getUser(eventId.toString());
 
         mJoin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,13 +158,12 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChildren()) {
+                    mJoin.setVisibility(View.VISIBLE);
+                    mLeave.setVisibility(View.GONE);
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         if(mUser.getUid().toString().equals(ds.getValue().toString())) {
                             mJoin.setVisibility(View.GONE);
                             mLeave.setVisibility(View.VISIBLE);
-                        } else {
-                            mJoin.setVisibility(View.VISIBLE);
-                            mLeave.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -178,7 +176,7 @@ public class EventActivity extends AppCompatActivity {
         });
     }
 
-    public void getUser() {
+    public void getUser(final String eventId) {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -186,6 +184,7 @@ public class EventActivity extends AppCompatActivity {
                     userID = mUser.getUid().toString();
                     userName = dataSnapshot.child("name").getValue().toString();
                 }
+                getParticipantsId(eventId);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -202,6 +201,7 @@ public class EventActivity extends AppCompatActivity {
                     Log.i("EVENT", dataSnapshot.child("hostId").getValue().toString());
                     if(dataSnapshot.child("hostId").getValue().toString().equals(mUser.getUid().toString())) {
                         mDeleteEvent.setVisibility(View.VISIBLE);
+                        mJoin.setVisibility(View.GONE);
                         mLeave.setVisibility(View.GONE);
                     }
                 }
