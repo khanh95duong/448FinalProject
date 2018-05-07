@@ -40,6 +40,9 @@ public class ProfileFragment extends Fragment {
         // get firebase and get db reference and user
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
+        if (mUser.getUid() == null) {
+            getActivity().finish();
+        }
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
 
         mName = (TextView) v.findViewById(R.id.profile_name);

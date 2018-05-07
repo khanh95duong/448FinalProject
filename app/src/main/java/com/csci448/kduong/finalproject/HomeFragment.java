@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -117,6 +118,32 @@ public class HomeFragment extends Fragment {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events");
+        mDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                updateUI();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                updateUI();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                updateUI();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                updateUI();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                updateUI();
+            }
+        });
 
         mEventRecyclerView = (RecyclerView) view.findViewById(R.id.events_recycler_view);
         mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -141,21 +168,22 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        updateUI();
+        //new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        updateUI();
+        //new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        updateUI();
+        //new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -169,6 +197,7 @@ public class HomeFragment extends Fragment {
         mAdapter = new EventAdapter(events);
         mEventRecyclerView.setAdapter(mAdapter);
         mEventRecyclerView.invalidate();
+        //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 
     public void getSize() {
