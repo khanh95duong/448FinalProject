@@ -27,6 +27,7 @@ public class EventActivity extends AppCompatActivity {
     private TextView mAddress;
     private LinearLayout mLinearLayout;
     private Button mJoin;
+    private Button mLeave;
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -70,12 +71,20 @@ public class EventActivity extends AppCompatActivity {
         }
 
         mJoin = (Button) findViewById(R.id.join_event);
+        mLeave = (Button) findViewById(R.id.leave_event);
         getUser();
         getParticipantsId(eventId.toString());
         mJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EventLab.getInstance().joinEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
+            }
+        });
+
+        mLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventLab.getInstance().leaveEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
             }
         });
 
@@ -88,12 +97,12 @@ public class EventActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChildren()) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                        Log.i("User Id", mUser.getUid().toString());
-                        Log.i("Current Id", ds.getValue().toString());
                         if(mUser.getUid().toString().equals(ds.getValue().toString())) {
-                            mJoin.setVisibility(View.INVISIBLE);
-                            Log.i("Button", "invisible");
+                            mJoin.setVisibility(View.GONE);
+                            mLeave.setVisibility(View.VISIBLE);
+                        } else {
+                            mJoin.setVisibility(View.VISIBLE);
+                            mLeave.setVisibility(View.GONE);
                         }
                     }
                 }

@@ -68,12 +68,18 @@ public class EventLab {
     public void joinEvent(String eventId, String name, String id) {
         participants = new ArrayList<>();
         participantsId = new ArrayList<>();
-        loadInfo();
-        addParticipants(eventId, name);
-        addParticipantsId(eventId, id);
+        addParticipants(eventId, name, true);
+        addParticipantsId(eventId, id, true);
     }
 
-    public void addParticipants(final String eventId, final String name) {
+    public void leaveEvent(String eventId, String name, String id) {
+        participants = new ArrayList<>();
+        participantsId = new ArrayList<>();
+        addParticipants(eventId, name, false);
+        addParticipantsId(eventId, id, false);
+    }
+
+    public void addParticipants(final String eventId, final String name, final boolean join) {
         DatabaseReference partDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events").child(eventId).child("participants");
         partDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,7 +90,11 @@ public class EventLab {
                         participants.add(ds.getValue().toString());
                         Log.i("Participants", ""+participants.size());
                     }
-                    participants.add(name);
+                    if(join) {
+                        participants.add(name);
+                    }else {
+                        participants.remove(name);
+                    }
                     mDatabaseReference.child(eventId).child("participants").setValue(participants);
                 }
             }
@@ -95,7 +105,7 @@ public class EventLab {
         });
     }
 
-    public void addParticipantsId(final String eventId, final String id) {
+    public void addParticipantsId(final String eventId, final String id, final boolean join) {
         DatabaseReference partDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Events").child(eventId).child("participantsId");
         partDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -105,7 +115,11 @@ public class EventLab {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         participantsId.add(ds.getValue().toString());                   }
                 }
-                participantsId.add(id);
+                if(join) {
+                    participantsId.add(id);
+                }else {
+                    participantsId.remove(id);
+                }
                 mDatabaseReference.child(eventId).child("participantsId").setValue(participantsId);
             }
             @Override
