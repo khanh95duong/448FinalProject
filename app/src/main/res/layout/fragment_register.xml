@@ -13,6 +13,14 @@
         android:text="@string/register_title"/>
 
     <EditText
+        android:id="@+id/register_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/name_input"/>
+
+    <EditText
         android:id="@+id/register_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

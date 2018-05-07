@@ -13,13 +13,6 @@
         android:text="Edit Profile"/>
 
     <EditText
-        android:id="@+id/edit_name"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter you full name here"/>
-
-    <EditText
         android:id="@+id/edit_age"
         android:inputType="number"
         android:layout_width="match_parent"

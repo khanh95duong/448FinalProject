@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     // data for registering user
     private Button mRegister;
     private TextView mToLogin;
+    private EditText mFullName;
     private EditText mUserName;
     private EditText mPassword;
 
@@ -61,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         //progress dialog
         mProgressDialog = new ProgressDialog(this);
 
+        mFullName = (EditText) this.findViewById(R.id.register_name);
         mUserName = (EditText) this.findViewById(R.id.register_user_name);
         mPassword = (EditText) this.findViewById(R.id.register_password);
 
@@ -88,8 +90,15 @@ public class RegisterActivity extends AppCompatActivity {
         // get string from the edit texts, not sure why there is trim, it is from the guide
         String username = mUserName.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
+        String name = mFullName.getText().toString().trim();
 
         // check to see if username or password is empty, if so, do not move on
+
+        if(TextUtils.isEmpty(name)) {
+            Toast.makeText(this, "Please enter you name", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if(TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please enter an email for the username", Toast.LENGTH_LONG).show();
             return;
@@ -99,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter a password", Toast.LENGTH_LONG).show();
             return;
         }
+
 
         // if everything is good, show a progress bar while the data is uploaded to database (fancy)
         mProgressDialog.setMessage("Registering User ...");
@@ -128,8 +138,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     // save the current information to the database
     public void saveInformation() {
-        String name = "Give me a name ;)";
-        int age = 99    ;
+        String name = mFullName.getText().toString();
+        int age = 99;
         String bio = "Give me a bio ;D";
 
         UserInformation userInfo = new UserInformation(name, age, bio);
@@ -139,6 +149,6 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabaseReference.setValue(userInfo);
 
         Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
-        finish();
+        return;
     }
 }
