@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -27,13 +28,13 @@ public class    OptionFragment extends Fragment {
     };
     private static final int REQUEST_LOCATION_PERMISSIONS = 0;
 
-    private Button mMapButton;
+    private ImageButton mMapButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_option, container, false);
 
-        mMapButton = (Button) v.findViewById(R.id.map_button);
+        mMapButton = (ImageButton) v.findViewById(R.id.map_button);
         mMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
