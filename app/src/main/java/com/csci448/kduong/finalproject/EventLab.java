@@ -57,12 +57,10 @@ public class EventLab {
         return null;
     }
 
-    public void addEvent(Event ev) {
+    public void addEvent(Event ev, String name, String id) {
         // Add information to database under the current user
-        ev.setHost(userName);
-        ev.setHostId(userId);
-        ev.addParticipant(userName);
-        ev.addParticipantId(userId);
+        ev.addParticipant(name);
+        ev.addParticipantId(id);
         mDatabaseReference.child(ev.getId().toString()).setValue(ev);
     }
 

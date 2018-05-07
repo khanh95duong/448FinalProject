@@ -15,6 +15,14 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -28,7 +36,12 @@ public class AddEventActivity extends AppCompatActivity {
 
     private String mEventDate;
     private String mEventTime;
+    private String userName;
     private int year, month, day, hour, min;
+
+    private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseUser mUser;
 
     // booleans to make sure time and date are set
     private boolean timeIsSelected = false;
@@ -78,6 +91,12 @@ public class AddEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event_layout);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mUser = mFirebaseAuth.getCurrentUser();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
+
+        getUser();
 
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -149,17 +168,34 @@ public class AddEventActivity extends AppCompatActivity {
             String uuid = UUID.randomUUID().toString();
 
             Event eventInfo = new Event(uuid);
+            eventInfo.setHostId(mUser.getUid().toString());
+            eventInfo.setHost(userName);
             eventInfo.setTitle(name);
             eventInfo.setId(uuid);
             eventInfo.setAddress(address);
             eventInfo.setDate(date);
             eventInfo.setTime(time);
 
-            EventLab.getInstance().addEvent(eventInfo);
+            EventLab.getInstance().addEvent(eventInfo, userName, mUser.getUid().toString());
 
             Toast.makeText(this, "Information Saved ...", Toast.LENGTH_LONG).show();
             finish();
         }
+    }
+
+    public void getUser() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    userName = dataSnapshot.child("name").getValue().toString();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

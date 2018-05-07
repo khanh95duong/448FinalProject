@@ -27,8 +27,9 @@ import io.fabric.sdk.android.Fabric;
 
 public class ProfileEditActivity extends AppCompatActivity {
 
-    private EditText mName, mAge, mBio;
+    private EditText mAge, mBio;
     private Button mSaveInfo;
+    private String mName;
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -44,7 +45,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
 
-        mName = (EditText) findViewById(R.id.edit_name);
         mAge = (EditText) findViewById(R.id.edit_age);
         mBio = (EditText) findViewById(R.id.edit_bio);
         mSaveInfo = (Button) findViewById(R.id.save_information);
@@ -61,20 +61,17 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     // save the current information to the database
     public void saveInformation() {
-        if(TextUtils.isEmpty(mName.getText())) {
-            mName.setError("Name is required");
-        }
-        else if(TextUtils.isEmpty(mAge.getText())) {
+
+        if(TextUtils.isEmpty(mAge.getText())) {
             mAge.setError("Age is required");
         }
         else if(TextUtils.isEmpty(mBio.getText())) {
             mBio.setError("Bio is required");
         } else {
-            String name = mName.getText().toString().trim();
             int age = Integer.valueOf(mAge.getText().toString().trim());
             String bio = mBio.getText().toString().trim();
 
-            UserInformation userInfo = new UserInformation(name, age, bio);
+            UserInformation userInfo = new UserInformation(mName, age, bio);
 
             // Add information to database under the current user
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
@@ -91,7 +88,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChildren()) {
-                    mName.setText(dataSnapshot.child("name").getValue().toString());
+                    mName = dataSnapshot.child("name").getValue().toString();
                     mAge.setText(dataSnapshot.child("age").getValue().toString());
                     mBio.setText(dataSnapshot.child("bio").getValue().toString());
                 }

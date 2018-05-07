@@ -171,6 +171,7 @@ public class EventActivity extends AppCompatActivity {
                     Log.i("EVENT", dataSnapshot.child("hostId").getValue().toString());
                     if(dataSnapshot.child("hostId").getValue().toString().equals(mUser.getUid().toString())) {
                         mDeleteEvent.setVisibility(View.VISIBLE);
+                        mLeave.setVisibility(View.GONE);
                     }
                 }
             }
