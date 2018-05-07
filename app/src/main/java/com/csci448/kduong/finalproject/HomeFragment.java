@@ -113,6 +113,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceStates) {
+        Log.i("HomeFragment", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -145,8 +146,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        EventLab.getInstance().loadEvents();
+
         mEventRecyclerView = (RecyclerView) view.findViewById(R.id.events_recycler_view);
-        mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mAddEvents = (FloatingActionButton) view.findViewById(R.id.add_events);
         mAddEvents.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +164,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("HomeFragment", "On activity result called in home");
         updateUI();
+        getActivity().recreate();
     }
 
     @Override
@@ -175,6 +179,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        Log.i("HomeFragment", "onStart");
         updateUI();
         //new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -182,6 +187,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("HomeFragment", "onResume");
         updateUI();
         //new SearchTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -194,10 +200,12 @@ public class HomeFragment extends Fragment {
 
     public void updateUI() {
         events = EventLab.getInstance().getEvents();
+        mEventRecyclerView.setAdapter(null);
+        mEventRecyclerView.setLayoutManager(null);
         mAdapter = new EventAdapter(events);
         mEventRecyclerView.setAdapter(mAdapter);
-        mEventRecyclerView.invalidate();
-        //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        mEventRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter.notifyDataSetChanged();
     }
 
     public void getSize() {

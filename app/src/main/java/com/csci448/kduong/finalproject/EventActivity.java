@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +53,35 @@ public class EventActivity extends AppCompatActivity {
         mUser = mFirebaseAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
         eventBaseReference = FirebaseDatabase.getInstance().getReference().child("Events").child(eventId.toString());
+        eventBaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //finish();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.getKey().equals("participantsId")) {
+                    finish();
+                }
+                Log.i("EventActivity", dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                //finish();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                //finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         mTitle = (TextView) findViewById(R.id.event_activity_title);
         mTitle.setText(event.getTitle());
@@ -99,7 +129,7 @@ public class EventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EventLab.getInstance().joinEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
                 Toast.makeText(getApplicationContext(), "You have joined an event", Toast.LENGTH_LONG).show();
-                finish();
+                //finish();
 
             }
         });
@@ -109,7 +139,7 @@ public class EventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EventLab.getInstance().leaveEvent(getIntent().getSerializableExtra("EventId").toString(), userName, userID);
                 Toast.makeText(getApplicationContext(), "You have left an event", Toast.LENGTH_LONG).show();
-                finish();
+                //finish();
             }
         });
 
