@@ -70,6 +70,9 @@ public class HomeFragment extends Fragment {
             mTitleTextView.setText(mEvent.getTitle());
             mDateTextView.setText(mEvent.getDate());
             mHostTextView.setText(mEvent.getHost());
+            if (mEvent.isAParticipant(mUser.getUid())) {
+                itemView.setBackgroundColor(0xff00ff00);
+            }
         }
 
         @Override

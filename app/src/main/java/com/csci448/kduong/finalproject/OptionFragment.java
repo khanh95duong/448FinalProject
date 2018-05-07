@@ -28,6 +28,7 @@ public class    OptionFragment extends Fragment {
     private static final int REQUEST_LOCATION_PERMISSIONS = 0;
 
     private Button mMapButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_option, container, false);

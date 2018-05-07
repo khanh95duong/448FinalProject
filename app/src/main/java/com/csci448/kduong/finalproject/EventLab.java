@@ -187,4 +187,11 @@ public class EventLab {
         });
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
 }
