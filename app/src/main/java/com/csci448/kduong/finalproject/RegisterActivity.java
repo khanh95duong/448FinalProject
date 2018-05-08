@@ -145,10 +145,11 @@ public class RegisterActivity extends AppCompatActivity {
     // save the current information to the database
     public void saveInformation() {
         String name = mFullName.getText().toString();
+        String email = mUserName.getText().toString();
         int age = 99;
         String bio = "Give me a bio ;D";
 
-        UserInformation userInfo = new UserInformation(name, age, bio);
+        UserInformation userInfo = new UserInformation(name, age, bio, email);
 
         // Add information to database under the current user
         FirebaseUser user = mFirebaseAuth.getCurrentUser();

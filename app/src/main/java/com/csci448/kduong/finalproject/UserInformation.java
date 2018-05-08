@@ -8,15 +8,17 @@ public class UserInformation {
     public String name;
     public int age;
     public String bio;
+    public String email;
 
     public UserInformation() {
 
     }
 
-    public UserInformation(String name, int age, String bio) {
+    public UserInformation(String name, int age, String bio, String email) {
         this.name = name;
         this.age = age;
         this.bio = bio;
+        this.email = email;
     }
 
     public String getName() {
@@ -41,5 +43,13 @@ public class UserInformation {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

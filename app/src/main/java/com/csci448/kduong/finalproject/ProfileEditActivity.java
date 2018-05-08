@@ -30,6 +30,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     private EditText mAge, mBio;
     private Button mSaveInfo;
     private String mName;
+    private String mEmail;
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -82,7 +83,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             int age = Integer.valueOf(mAge.getText().toString().trim());
             String bio = mBio.getText().toString().trim();
 
-            UserInformation userInfo = new UserInformation(mName, age, bio);
+            UserInformation userInfo = new UserInformation(mName, age, bio, mEmail);
 
             // Add information to database under the current user
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
@@ -102,6 +103,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     mName = dataSnapshot.child("name").getValue().toString();
                     mAge.setText(dataSnapshot.child("age").getValue().toString());
                     mBio.setText(dataSnapshot.child("bio").getValue().toString());
+                    mEmail = dataSnapshot.child("email").getValue().toString();
                 }
             }
 

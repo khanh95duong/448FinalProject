@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileFragment extends Fragment {
 
     private FloatingActionButton mEdit;
-    private TextView mName, mAge, mBio;
+    private TextView mName, mAge, mBio, mEmail;
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -48,6 +48,7 @@ public class ProfileFragment extends Fragment {
         mName = (TextView) v.findViewById(R.id.profile_name);
         mAge = (TextView) v.findViewById(R.id.profile_age);
         mBio = (TextView) v.findViewById(R.id.profile_bio);
+        mEmail = (TextView) v.findViewById(R.id.profile_email);
 
         loadInfo();
 
@@ -78,6 +79,7 @@ public class ProfileFragment extends Fragment {
                     mName.setText(dataSnapshot.child("name").getValue().toString());
                     mAge.setText(dataSnapshot.child("age").getValue().toString());
                     mBio.setText(dataSnapshot.child("bio").getValue().toString());
+                    mEmail.setText(dataSnapshot.child("email").getValue().toString());
                 }
             }
 

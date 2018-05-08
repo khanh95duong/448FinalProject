@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:gravity="center">
 
             <TextView
@@ -28,6 +28,13 @@
                 android:layout_height="wrap_content"
                 android:textSize="24dp"
                 android:text="No name"/>
+
+            <TextView
+                android:id="@+id/profile_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:text="No email"/>
 
         </LinearLayout>
 

@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ViewParticipantProfile extends AppCompatActivity {
     private String mUserId;
-    private TextView mName, mAge, mBio;
+    private TextView mName, mAge, mBio, mEmail;
 
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -40,6 +40,7 @@ public class ViewParticipantProfile extends AppCompatActivity {
         mName = (TextView) findViewById(R.id.profile_name);
         mAge = (TextView) findViewById(R.id.profile_age);
         mBio = (TextView) findViewById(R.id.profile_bio);
+        mEmail = (TextView) findViewById(R.id.profile_email);
 
         makeMenu();
         loadInfo();
@@ -62,6 +63,7 @@ public class ViewParticipantProfile extends AppCompatActivity {
                     mName.setText(dataSnapshot.child("name").getValue().toString());
                     mAge.setText(dataSnapshot.child("age").getValue().toString());
                     mBio.setText(dataSnapshot.child("bio").getValue().toString());
+                    mEmail.setText(dataSnapshot.child("email").getValue().toString());
                 }
             }
 
